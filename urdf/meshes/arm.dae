@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>piklet_bot</author>
+    </contributor>
+    <created>2024-01-01T00:00:00Z</created>
+    <modified>2024-01-01T00:00:00Z</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_geometries>
+    <geometry id="arm-mesh">
+      <mesh>
+        <source id="arm-positions">
+          <float_array id="arm-positions-array" count="24">
+            -0.05 -0.05 0.0
+             0.05 -0.05 0.0
+             0.05  0.05 0.0
+            -0.05  0.05 0.0
+            -0.05 -0.05 0.4
+             0.05 -0.05 0.4
+             0.05  0.05 0.4
+            -0.05  0.05 0.4
+          </float_array>
+          <technique_common>
+            <accessor source="#arm-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="arm-vertices">
+          <input semantic="POSITION" source="#arm-positions"/>
+        </vertices>
+        <triangles count="12">
+          <input semantic="VERTEX" source="#arm-vertices" offset="0"/>
+          <p>0 1 2 0 2 3 4 7 6 4 6 5 0 4 5 0 5 1 2 6 7 2 7 3 0 3 7 0 7 4 1 5 6 1 6 2</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene">
+      <node id="arm">
+        <instance_geometry url="#arm-mesh"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
