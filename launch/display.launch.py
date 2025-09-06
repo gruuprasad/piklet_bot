@@ -36,8 +36,7 @@ def generate_launch_description():
 
     rviz_arg = DeclareLaunchArgument(
         "rvizconfig",
-        default_value=LaunchConfiguration("sim").perform({}) == "true"
-        if False else default_rviz_display_path,
+        default_value=default_rviz_display_path,
         description="Absolute path to rviz config file"
     )
 
