@@ -1,89 +1,75 @@
 #!/usr/bin/env python3
 
+import os
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
+from launch.substitutions import LaunchConfiguration, Command
+from launch.conditions import IfCondition, UnlessCondition
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 
-
 def generate_launch_description():
     pkg_share = get_package_share_directory('piklet_description')
-
-    # Default paths
-    default_model_path = PathJoinSubstitution([pkg_share, "urdf", "piklet_robot.urdf.xacro"])
-    default_rviz_display_path = PathJoinSubstitution([pkg_share, "rviz", "display.rviz"])
-    default_rviz_gazebo_path = PathJoinSubstitution([pkg_share, "rviz", "display_gazebo.rviz"])
+    xacro_file = os.path.join(pkg_share, 'urdf', 'piklet_robot.urdf.xacro')
 
     # Launch arguments
-    use_sim_time_arg = DeclareLaunchArgument(
-        "use_sim_time",
-        default_value="false",
-        description="Use simulation (Gazebo) clock if true"
+    sim = LaunchConfiguration('sim')
+    use_sim_time = LaunchConfiguration('use_sim_time')
+
+    declare_sim = DeclareLaunchArgument(
+        'sim', default_value='false', description='Use simulation mode (Gazebo) if true'
+    )
+    declare_use_sim_time = DeclareLaunchArgument(
+        'use_sim_time', default_value='true', description='Use simulation clock if true'
     )
 
-    model_arg = DeclareLaunchArgument(
-        "model",
-        default_value=default_model_path,
-        description="Absolute path to robot urdf.xacro file"
+    # Robot description from xacro
+    robot_description_content = Command(['xacro ', xacro_file])
+    robot_description = {'robot_description': robot_description_content}
+
+    # Robot State Publisher
+    rsp_node = Node(
+        package='robot_state_publisher',
+        executable='robot_state_publisher',
+        name='robot_state_publisher',
+        output='screen',
+        parameters=[robot_description, {'use_sim_time': use_sim_time}]
     )
 
-    sim_arg = DeclareLaunchArgument(
-        "sim",
-        default_value="false",
-        description="If true, load Gazebo-ready RViz config"
+    # Joint State Publisher GUI
+    jsp_node = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui',
+        output='screen'
     )
 
-    rviz_arg = DeclareLaunchArgument(
-        "rvizconfig",
-        default_value=default_rviz_display_path,
-        description="Absolute path to rviz config file"
+    # RViz Nodes with Conditions
+    rviz_rviz_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2_urdf',
+        output='screen',
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'display.rviz')],
+        parameters=[{'use_sim_time': use_sim_time}],
+        condition=UnlessCondition(sim)  # Only if sim != true
     )
 
-    # Robot description (xacro → urdf)
-    robot_description = Command(["xacro ", LaunchConfiguration("model")])
-
-    # Nodes
-    robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        name="robot_state_publisher",
-        output="screen",
-        parameters=[{
-            "robot_description": robot_description,
-            "use_sim_time": LaunchConfiguration("use_sim_time")
-        }]
-    )
-
-    joint_state_publisher_gui = Node(
-        package="joint_state_publisher_gui",
-        executable="joint_state_publisher_gui",
-        name="joint_state_publisher_gui",
-        output="screen"
-    )
-
-    # Choose RViz config based on sim arg
-    rviz_config = PathJoinSubstitution([
-        pkg_share,
-        "rviz",
-        LaunchConfiguration("sim").perform({}) == "true" and "display_gazebo.rviz" or "display.rviz"
-    ])
-
-    rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="screen",
-        arguments=["-d", rviz_config],
-        parameters=[{"use_sim_time": LaunchConfiguration("use_sim_time")}]
+    rviz_gazebo_node = Node(
+        package='rviz2',
+        executable='rviz2',
+        name='rviz2_gazebo',
+        output='screen',
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'display_gazebo.rviz')],
+        parameters=[{'use_sim_time': use_sim_time}],
+        condition=IfCondition(sim)  # Only if sim == true
     )
 
     return LaunchDescription([
-        use_sim_time_arg,
-        model_arg,
-        sim_arg,
-        rviz_arg,
-        robot_state_publisher_node,
-        joint_state_publisher_gui,
-        rviz_node,
+        declare_sim,
+        declare_use_sim_time,
+        rsp_node,
+        jsp_node,
+        rviz_rviz_node,
+        rviz_gazebo_node
     ])

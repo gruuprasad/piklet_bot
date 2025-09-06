@@ -16,8 +16,8 @@ def generate_launch_description():
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(display_launch),
             launch_arguments={
-                "sim": "true",
-                "use_sim_time": "true"
+                'sim': 'true',
+                'use_sim_time': 'true'
             }.items()
         )
     ])
