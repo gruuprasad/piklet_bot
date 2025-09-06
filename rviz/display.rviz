@@ -1,0 +1,66 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Views
+    Name: Views
+  - Class: rviz_common/Time
+    Name: Time
+
+Visualization Manager:
+  Class: ""
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: base_link
+    Frame Rate: 30
+
+  Displays:
+    - Class: rviz_default_plugins/RobotModel
+      Enabled: true
+      Name: RobotModel
+      Robot Description: robot_description
+      Visual Enabled: true
+      Collision Enabled: false
+      Alpha: 1.0
+
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+
+    - Class: rviz_default_plugins/LaserScan
+      Enabled: true
+      Name: Lidar
+      Topic: /scan   # update to match your lidar driver / gazebo plugin
+      Queue Size: 10
+      Style: Points
+      Size (m): 0.05
+      Color: 255; 0; 0
+
+    - Class: rviz_default_plugins/Image
+      Enabled: false
+      Name: Depth Camera
+      Topic: /camera/depth/image_raw   # update when you have depth sensor driver
+      Queue Size: 10
+      Transport Hint: raw
+
+    - Class: rviz_default_plugins/PointCloud2
+      Enabled: false
+      Name: Depth PointCloud
+      Topic: /camera/depth/points   # update when you have depth plugin
+      Queue Size: 10
+      Size (m): 0.02
+      Style: Points
+      Color Transformer: Intensity
+
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 2.0
+      Pitch: 0.5
+      Yaw: 0.5
+      Focal Point: [0, 0, 0.5]
