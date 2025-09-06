@@ -14,7 +14,7 @@ def generate_launch_description():
 
     # Xacro and RViz config
     robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.urdf.xacro'])
-    rviz_config = PathJoinSubstitution([pkg_share, 'rviz', 'piklet_config.rviz'])
+    rviz_config = PathJoinSubstitution([pkg_share, 'rviz', 'display_gazebo.rviz'])
 
     # Launch arguments
     use_sim_time = LaunchConfiguration('use_sim_time')
