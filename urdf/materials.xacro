@@ -14,5 +14,6 @@
   <xacro:color_material name="darkgray" r="0.3" g="0.3" b="0.3" a="1"/>
   <xacro:color_material name="red" r="0.8" g="0.1" b="0.1" a="1"/>
   <xacro:color_material name="green" r="0.2" g="0.8" b="0.2" a="1"/>
+  <xacro:color_material name="white" r="1" g="1" b="1" a="1"/>
 
 </robot>
