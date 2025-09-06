@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot name="piklet_container_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Include modular parts -->
+  <xacro:include filename="$(find piklet_bot)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find piklet_bot)/urdf/body.xacro"/>
+  <xacro:include filename="$(find piklet_bot)/urdf/wheel.xacro"/>
+  <xacro:include filename="$(find piklet_bot)/urdf/caster.xacro"/>
+  <xacro:include filename="$(find piklet_bot)/urdf/lidar.xacro"/>
+  <xacro:include filename="$(find piklet_bot)/urdf/depth_camera.xacro"/>
+  <xacro:include filename="$(find piklet_bot)/urdf/gazebo.xacro"/>
+
+  <!-- Base body (two plates + poles) -->
+  <xacro:piklet_body parent="world"/>
+
+  <!-- Drive wheels -->
+  <xacro:drive_wheel name="left_wheel"  parent="base_bottom" xyz="0 -0.17 0.05"/>
+  <xacro:drive_wheel name="right_wheel" parent="base_bottom" xyz="0 0.17 0.05"/>
+
+  <!-- Casters -->
+  <xacro:caster_wheel name="caster_front" parent="base_bottom" xyz="0.15 0 0.02"/>
+  <xacro:caster_wheel name="caster_back"  parent="base_bottom" xyz="-0.15 0 0.02"/>
+
+  <!-- Sensors -->
+  <xacro:lidar_sensor parent="base_top" xyz="0 0 0.02"/>
+  <xacro:depth_camera parent="base_top" xyz="0.2 0 0.02"/>
+
+  <!-- Gazebo Plugins -->
+  <xacro:diff_drive_plugin left="left_wheel_joint" right="right_wheel_joint"/>
+  <xacro:lidar_plugin parent="lidar_link"/>
+  <xacro:depth_camera_plugin parent="depth_camera_link"/>
+
+</robot>

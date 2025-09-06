@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<robot name="piklet_robot" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find piklet_bot)/urdf/piklet_robot_macro.xacro" />
+<robot name="diffdrive_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find piklet_bot)/urdf/diffdrive_robot_macro.xacro" />
   <xacro:property name="base_radius" value="0.15" />
   <xacro:property name="passive_wheel_height" value="0.04" />
   <xacro:property name="passive_wheel_radius" value="0.025" />
@@ -8,6 +8,7 @@
   <xacro:property name="wheel_radius" value="0.039" />
   <xacro:property name="wheel_height" value="0.02" />
   <xacro:property name="wheel_mass" value="2.5" />
+  <xacro:property name="sensor_box" value="0.1" />
 
   <link name="base_link">
     <inertial>
@@ -17,7 +18,7 @@
       <cylinder_inertia m="5" r="${base_radius}" h="0.02" />
     </inertial>
     <visual>
-			<origin xyz="0 0 0" rpy="0 0 0" />
+
 			<geometry>
 				<cylinder length="0.02" radius="${base_radius}" />
 			</geometry>
@@ -53,4 +54,66 @@
     translateY="-${base_radius}"/>
   <xacro:wheel side="left" parent="base_link" translateX="0"
     translateY="${base_radius}" />
-</robot>
+
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <box size="${sensor_box} ${sensor_box} ${sensor_box}" />
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+			<box size="${sensor_box} ${sensor_box} ${sensor_box}" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="lidar_sensor_joint" type='fixed'>
+    <parent link="base_link" />
+    <child link="lidar_link" />
+    <origin xyz="0.1 0 0.1" rpy="0 0 0"/>
+  </joint>
+
+  <link name="depth_link">
+    <visual>
+    <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${sensor_box} ${sensor_box} ${sensor_box}" />
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${sensor_box} ${sensor_box} ${sensor_box}" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0.0" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name='depth_link_joint' type='fixed'>   	 
+    <origin xyz="0.1 0 0.05" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="depth_link"/>
+  </joint>
+</robot

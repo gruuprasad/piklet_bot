@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="depth_camera" params="parent xyz">
+    <link name="depth_camera_link">
+      <visual>
+        <geometry><box size="0.06 0.04 0.04"/></geometry>
+        <material name="green"/>
+      </visual>
+    </link>
+    <joint name="depth_camera_joint" type="fixed">
+      <origin xyz="${xyz}"/>
+      <parent link="${parent}"/>
+      <child link="depth_camera_link"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

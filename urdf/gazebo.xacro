@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       xmlns:ros="http://www.ros.org/wiki/ros"
+       xmlns:gazebo="http://gazebosim.org/">
+
+  <!-- Differential Drive Plugin -->
+  <xacro:macro name="diff_drive_plugin" params="left right">
+    <gazebo>
+      <plugin name="diff_drive" filename="gz-sim-diff-drive-system">
+        <!-- wheels -->
+        <left_joint>${left}</left_joint>
+        <right_joint>${right}</right_joint>
+
+        <!-- topic interface -->
+        <ros>
+          <namespace>/piklet_bot</namespace>
+          <topic name="cmd_vel" type="geometry_msgs/msg/Twist"/>
+          <topic name="odom" type="nav_msgs/msg/Odometry"/>
+        </ros>
+
+        <!-- physics -->
+        <wheel_separation>0.34</wheel_separation>
+        <wheel_radius>0.05</wheel_radius>
+
+        <!-- odom frame -->
+        <odom_frame>odom</odom_frame>
+        <base_frame>base_bottom</base_frame>
+        <publish_odom>true</publish_odom>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Lidar Sensor Plugin -->
+  <xacro:macro name="lidar_plugin" params="parent">
+    <gazebo reference="${parent}">
+      <sensor name="lidar_sensor" type="gpu_lidar">
+        <pose>0 0 0 0 0 0</pose>
+        <update_rate>10</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>360</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+          </scan>
+          <range>
+            <min>0.12</min>
+            <max>12.0</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+        <plugin name="lidar_ros" filename="gz-sim-ros2-laser-scan">
+          <ros>
+            <topic name="scan" type="sensor_msgs/msg/LaserScan"/>
+          </ros>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Depth Camera Plugin -->
+  <xacro:macro name="depth_camera_plugin" params="parent">
+    <gazebo reference="${parent}">
+      <sensor name="depth_camera" type="camera">
+        <pose>0 0 0 0 0 0</pose>
+        <update_rate>30</update_rate>
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10.0</far>
+          </clip>
+        </camera>
+        <plugin name="depth_camera_ros" filename="gz-sim-ros2-camera">
+          <ros>
+            <topic name="image_raw" type="sensor_msgs/msg/Image"/>
+            <topic name="camera_info" type="sensor_msgs/msg/CameraInfo"/>
+          </ros>
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>
