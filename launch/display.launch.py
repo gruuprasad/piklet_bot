@@ -60,7 +60,7 @@ def generate_launch_description():
         executable='rviz2',
         name='rviz2_gazebo',
         output='screen',
-        arguments=['-d', os.path.join(pkg_share, 'rviz', 'display_gazebo.rviz')],
+        arguments=['-d', os.path.join(pkg_share, 'rviz', 'display.rviz')],
         parameters=[{'use_sim_time': use_sim_time}],
         condition=IfCondition(sim)  # Only if sim == true
     )

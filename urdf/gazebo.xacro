@@ -24,7 +24,7 @@
 
         <!-- odom frame -->
         <odom_frame>odom</odom_frame>
-        <base_frame>base_bottom</base_frame>
+        <base_frame>base_link</base_frame>
         <publish_odom>true</publish_odom>
       </plugin>
     </gazebo>

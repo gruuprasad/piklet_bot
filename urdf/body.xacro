@@ -18,7 +18,7 @@
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
-
+        <geometry>
           <cylinder length="0.02" radius="${base_radius}" />
         </geometry>
         <material name="white" />
