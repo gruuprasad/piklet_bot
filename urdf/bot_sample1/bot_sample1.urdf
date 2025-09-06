@@ -8,7 +8,7 @@
   <link name="base_link">
     <visual>
       <geometry>
-        <mesh filename="package://piklet_bot/urdf/meshes/base.dae"/>
+        <mesh filename="package://piklet_description/urdf/meshes/base.dae"/>
       </geometry>
       <material name="base_material">
         <color rgba="0.8 0.8 0.8 1.0"/>
@@ -36,7 +36,7 @@
   <link name="arm_link">
     <visual>
       <geometry>
-        <mesh filename="package://piklet_bot/urdf/meshes/arm.dae"/>
+        <mesh filename="package://piklet_description/urdf/meshes/arm.dae"/>
       </geometry>
       <material name="arm_material">
         <color rgba="0.2 0.2 0.8 1.0"/>
@@ -57,7 +57,7 @@
   <link name="gripper_link">
     <visual>
       <geometry>
-        <mesh filename="package://piklet_bot/urdf/meshes/gripper.dae"/>
+        <mesh filename="package://piklet_description/urdf/meshes/gripper.dae"/>
       </geometry>
       <material name="gripper_material">
         <color rgba="0.8 0.2 0.2 1.0"/>

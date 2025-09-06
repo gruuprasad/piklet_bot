@@ -8,7 +8,7 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     # Paths
-    pkg_share = FindPackageShare("piklet_bot")
+    pkg_share = FindPackageShare("piklet_description")
 
     # Robot description from xacro
     robot_description_content = Command([

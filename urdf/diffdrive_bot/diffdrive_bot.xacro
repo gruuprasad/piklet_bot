@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="diffdrive_robot" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find piklet_bot)/urdf/diffdrive_robot_macro.xacro" />
+  <xacro:include filename="$(find piklet_description)/urdf/diffdrive_robot_macro.xacro" />
   <xacro:property name="base_radius" value="0.15" />
   <xacro:property name="passive_wheel_height" value="0.04" />
   <xacro:property name="passive_wheel_radius" value="0.025" />

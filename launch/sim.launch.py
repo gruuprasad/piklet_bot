@@ -10,7 +10,7 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory('piklet_bot')
+    pkg_share = get_package_share_directory('piklet_description')
 
     # Xacro and RViz config
     robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.xacro'])

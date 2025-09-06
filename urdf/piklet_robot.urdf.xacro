@@ -2,13 +2,13 @@
 <robot name="piklet_container_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- Include modular parts -->
-  <xacro:include filename="$(find piklet_bot)/urdf/materials.xacro"/>
-  <xacro:include filename="$(find piklet_bot)/urdf/body.xacro"/>
-  <xacro:include filename="$(find piklet_bot)/urdf/wheel.xacro"/>
-  <xacro:include filename="$(find piklet_bot)/urdf/caster.xacro"/>
-  <xacro:include filename="$(find piklet_bot)/urdf/lidar.xacro"/>
-  <xacro:include filename="$(find piklet_bot)/urdf/depth_camera.xacro"/>
-  <xacro:include filename="$(find piklet_bot)/urdf/gazebo.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/body.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/wheel.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/caster.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/lidar.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/depth_camera.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/gazebo.xacro"/>
 
   <!-- Base body (two plates + poles) -->
   <xacro:piklet_body parent="world"/>

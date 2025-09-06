@@ -8,7 +8,7 @@ import os
 
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory('piklet_bot')
+    pkg_share = get_package_share_directory('piklet_description')
 
     display_launch = os.path.join(pkg_share, "launch", "display.launch.py")
 

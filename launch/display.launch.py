@@ -8,7 +8,7 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory('piklet_bot')
+    pkg_share = get_package_share_directory('piklet_description')
 
     # Default paths
     default_model_path = PathJoinSubstitution([pkg_share, "urdf", "piklet_robot.xacro"])

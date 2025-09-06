@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = 'piklet_bot'
+package_name = 'piklet_description'
 
 setup(
     name=package_name,
@@ -26,7 +26,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'wheel_joint_publisher = piklet_bot.wheel_joint_publisher:main',
+            'wheel_joint_publisher = piklet_description.wheel_joint_publisher:main',
         ],
     },
 )
