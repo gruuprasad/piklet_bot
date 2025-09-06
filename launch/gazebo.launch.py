@@ -13,7 +13,7 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('piklet_description')
 
     # Path to your xacro
-    robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.xacro'])
+    robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.urdf.xacro'])
 
     # Declare sim_time arg
     use_sim_time = LaunchConfiguration('use_sim_time')

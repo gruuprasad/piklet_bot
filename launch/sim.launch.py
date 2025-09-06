@@ -13,7 +13,7 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('piklet_description')
 
     # Xacro and RViz config
-    robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.xacro'])
+    robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.urdf.xacro'])
     rviz_config = PathJoinSubstitution([pkg_share, 'rviz', 'piklet_config.rviz'])
 
     # Launch arguments

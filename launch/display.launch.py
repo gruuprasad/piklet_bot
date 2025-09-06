@@ -11,7 +11,7 @@ def generate_launch_description():
     pkg_share = get_package_share_directory('piklet_description')
 
     # Default paths
-    default_model_path = PathJoinSubstitution([pkg_share, "urdf", "piklet_robot.xacro"])
+    default_model_path = PathJoinSubstitution([pkg_share, "urdf", "piklet_robot.urdf.xacro"])
     default_rviz_display_path = PathJoinSubstitution([pkg_share, "rviz", "display.rviz"])
     default_rviz_gazebo_path = PathJoinSubstitution([pkg_share, "rviz", "display_gazebo.rviz"])
 
