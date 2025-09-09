@@ -6,17 +6,11 @@
   <!-- Differential Drive Plugin -->
   <xacro:macro name="diff_drive_plugin" params="left right">
     <gazebo>
-      <plugin name="diff_drive" filename="gz-sim-diff-drive-system">
+
+      <plugin name="gz::sim::systems::DiffDrive" filename="gz-sim-diff-drive-system">
         <!-- wheels -->
         <left_joint>${left}</left_joint>
         <right_joint>${right}</right_joint>
-
-        <!-- topic interface -->
-        <ros>
-          <namespace>/piklet_bot</namespace>
-          <topic name="cmd_vel" type="geometry_msgs/msg/Twist"/>
-          <topic name="odom" type="nav_msgs/msg/Odometry"/>
-        </ros>
 
         <!-- physics -->
         <wheel_separation>0.34</wheel_separation>
@@ -26,6 +20,15 @@
         <odom_frame>odom</odom_frame>
         <base_frame>base_link</base_frame>
         <publish_odom>true</publish_odom>
+
+        <!-- topic interface -->
+        <topic>cmd_vel</topic>
+      </plugin>
+
+      <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
+        <topic>joint_states</topic>
+        <joint_name>right_wheel_joint</joint_name>
+        <joint_name>left_wheel_joint</joint_name>
       </plugin>
     </gazebo>
   </xacro:macro>
@@ -51,7 +54,7 @@
             <resolution>0.01</resolution>
           </range>
         </ray>
-        <plugin name="lidar_ros" filename="gz-sim-ros2-laser-scan">
+        <plugin name="lidar_ros" filename="gz-sim-ros2-generic-sensor-system">
           <ros>
             <topic name="scan" type="sensor_msgs/msg/LaserScan"/>
           </ros>
@@ -78,7 +81,7 @@
             <far>10.0</far>
           </clip>
         </camera>
-        <plugin name="depth_camera_ros" filename="gz-sim-ros2-camera">
+        <plugin name="camera_ros" filename="gz-sim-ros2-generic-sensor-system">
           <ros>
             <topic name="image_raw" type="sensor_msgs/msg/Image"/>
             <topic name="camera_info" type="sensor_msgs/msg/CameraInfo"/>

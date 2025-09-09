@@ -11,10 +11,9 @@
     <!-- Bottom plate -->
     <link name="base_link">
       <inertial>
-        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
         <mass value="5" />
         <origin xyz="0 0 0" />
-        <cylinder_inertia m="5" r="${base_radius}" h="0.02" />
+        <xacro:cylinder_inertia m="5" r="${base_radius}" h="0.02" />
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -34,10 +33,9 @@
     <!-- Top plate -->
     <link name="base_top">
       <inertial>
-        <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
         <mass value="5" />
         <origin xyz="0 0 0" />
-        <cylinder_inertia m="5" r="${base_radius}" h="0.02" />
+        <xacro:cylinder_inertia m="5" r="${base_radius}" h="0.02" />
       </inertial>
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0" />
@@ -81,5 +79,29 @@
       <child link="${name}"/>
     </joint>
   </xacro:macro>
+
+  <!-- front mount -->
+  <link name="front_mount">
+    <inertial>
+      <mass value="0.3" />
+      <origin xyz="0 0 0" />
+      <xacro:cylinder_inertia m="0.3" r="0.03" h="${front_mount_length}" />
+    </inertial>
+    <visual>
+      <geometry><cylinder radius="0.03" length="${front_mount_length}"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry><cylinder radius="0.03" length="${front_mount_length}"/></geometry>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="front_mount_joint" type="fixed">
+    <parent link="base_top"/>
+    <child link="front_mount"/>
+    <origin xyz="0.13 0 0.09" rpy="0 0 0"/>
+  </joint>
 
 </robot>

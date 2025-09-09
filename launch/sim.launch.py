@@ -10,7 +10,8 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    pkg_share = get_package_share_directory('piklet_description')
+    pkg_name = 'piklet_description'
+    pkg_share = get_package_share_directory(pkg_name)
 
     # Xacro and RViz config
     robot_xacro = PathJoinSubstitution([pkg_share, 'urdf', 'piklet_robot.urdf.xacro'])
@@ -26,6 +27,21 @@ def generate_launch_description():
 
     # Process xacro → urdf string
     robot_description = Command(['xacro ', robot_xacro])
+
+    # Create a node for the ROS-Gazebo bridge to handle message passing
+    gz_bridge_params_path = os.path.join(get_package_share_directory(pkg_name),
+        'config',
+        'gz_bridge.yaml'
+    )
+    bridge = Node(
+        package="ros_gz_bridge",
+        executable="parameter_bridge",
+        arguments=[
+            '--ros-args', '-p',
+            f'config_file:={gz_bridge_params_path}'
+        ],
+        output="screen"
+    )
 
     # Launch Gazebo
     gazebo = ExecuteProcess(
@@ -72,5 +88,6 @@ def generate_launch_description():
         gazebo,
         rsp,
         spawn_entity,
-        rviz,
+        bridge
+#        rviz,
     ])

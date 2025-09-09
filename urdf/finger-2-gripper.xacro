@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!-- parallel_gripper.xacro -->
+  <xacro:macro name="parallel_gripper" params="parent_link xyz gripper_prefix:=gripper">
+    <!-- Base link for the gripper -->
+    <link name="${gripper_prefix}_base">
+      <visual>
+        <geometry>
+          <box size="0.05 0.02 0.02"/> <!-- small gripper base block -->
+        </geometry>
+        <material name="gray">
+          <color rgba="0.5 0.5 0.5 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.05 0.02 0.02"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="0.1"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="1e-4" iyy="1e-4" izz="1e-4" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <!-- Attach base to parent arm link -->
+
+    <joint name="${gripper_prefix}_mount_joint" type="fixed">
+      <parent link="${parent_link}"/>
+      <child link="${gripper_prefix}_base"/>
+      <origin xyz="${xyz}" rpy="3.14 0 0"/>
+    </joint>
+
+    <!-- Left finger -->
+    <link name="${gripper_prefix}_left_finger">
+      <visual>
+        <geometry>
+          <box size="0.02 0.01 0.06"/>
+        </geometry>
+        <origin xyz="0 0 0.03" rpy="0 0 0"/>
+        <material name="dark_gray">
+          <color rgba="0.3 0.3 0.3 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.02 0.01 0.06"/>
+        </geometry>
+        <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      </collision>
+      <inertial>
+        <mass value="0.05"/>
+        <origin xyz="0 0 0.03"/>
+        <inertia ixx="5e-5" iyy="5e-5" izz="5e-5" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <!-- Concave tip (approximated with a small cylinder) -->
+    <link name="${gripper_prefix}_left_tip">
+      <visual>
+        <geometry>
+          <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+        <origin xyz="0 0 0.06" rpy="1.57 0 0"/> <!-- rotate so it's a "cup" -->
+        <material name="rubber">
+          <color rgba="0.1 0.1 0.1 1"/>
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+        <origin xyz="0 0 0.06" rpy="1.57 0 0"/>
+      </collision>
+      <inertial>
+        <mass value="0.01"/>
+        <origin xyz="0 0 0.06"/>
+        <inertia ixx="1e-5" iyy="1e-5" izz="1e-5" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${gripper_prefix}_left_joint" type="prismatic">
+      <parent link="${gripper_prefix}_base"/>
+      <child link="${gripper_prefix}_left_finger"/>
+      <origin xyz="0 0.015 0" rpy="0 0 0"/>
+      <axis xyz="0 -1 0"/>
+      <limit lower="0.0" upper="0.04" effort="10" velocity="0.02"/>
+    </joint>
+
+    <joint name="${gripper_prefix}_left_tip_joint" type="fixed">
+      <parent link="${gripper_prefix}_left_finger"/>
+      <child link="${gripper_prefix}_left_tip"/>
+      <origin xyz="0 0 0"/>
+    </joint>
+
+    <!-- Right finger -->
+    <link name="${gripper_prefix}_right_finger">
+      <visual>
+        <geometry>
+          <box size="0.02 0.01 0.06"/>
+        </geometry>
+        <origin xyz="0 0 0.03"/>
+        <material name="dark_gray"/>
+      </visual>
+      <collision>
+        <geometry>
+          <box size="0.02 0.01 0.06"/>
+        </geometry>
+        <origin xyz="0 0 0.03"/>
+      </collision>
+      <inertial>
+        <mass value="0.05"/>
+        <origin xyz="0 0 0.03"/>
+        <inertia ixx="5e-5" iyy="5e-5" izz="5e-5" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+    </link>
+
+    <link name="${gripper_prefix}_right_tip">
+      <visual>
+        <geometry>
+          <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+        <origin xyz="0 0 0.06" rpy="1.57 0 0"/>
+        <material name="rubber"/>
+      </visual>
+      <collision>
+        <geometry>
+          <cylinder length="0.01" radius="0.01"/>
+        </geometry>
+        <origin xyz="0 0 0.06" rpy="1.57 0 0"/>
+      </collision>
+      <inertial>
+        <mass value="0.01"/>
+        <origin xyz="0 0 0.06"/>
+        <inertia ixx="1e-5" iyy="1e-5" izz="1e-5" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+    </link>
+
+    <joint name="${gripper_prefix}_right_joint" type="prismatic">
+      <parent link="${gripper_prefix}_base"/>
+      <child link="${gripper_prefix}_right_finger"/>
+      <origin xyz="0 -0.015 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0.0" upper="0.04" effort="10" velocity="0.02"/>
+      <!-- Mimic left finger for symmetry -->
+      <mimic joint="${gripper_prefix}_left_joint" multiplier="1" offset="0"/>
+    </joint>
+
+    <joint name="${gripper_prefix}_right_tip_joint" type="fixed">
+      <parent link="${gripper_prefix}_right_finger"/>
+      <child link="${gripper_prefix}_right_tip"/>
+    </joint>
+
+    <!-- Define TCP (tool center point) -->
+    <link name="${gripper_prefix}_tool"/>
+    <joint name="${gripper_prefix}_tool_joint" type="fixed">
+      <parent link="${gripper_prefix}_base"/>
+      <child link="${gripper_prefix}_tool"/>
+      <origin xyz="0.1 0 0" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+</robot>

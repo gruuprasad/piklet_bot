@@ -1,13 +1,33 @@
 Panels:
   - Class: rviz_common/Displays
+    Help Height: 78
     Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Status1
+        - /RobotModel1
+        - /RobotModel1/Mass Properties1
+      Splitter Ratio: 0.5
+    Tree Height: 707
   - Class: rviz_common/Selection
     Name: Selection
+  - Class: rviz_common/Tool Properties
+    Expanded:
+      - /2D Goal Pose1
+      - /Publish Point1
+    Name: Tool Properties
+    Splitter Ratio: 0.5886790156364441
   - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
     Name: Views
+    Splitter Ratio: 0.5
   - Class: rviz_common/Time
+    Experimental: false
     Name: Time
-
+    SyncMode: 0
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Enabled: true

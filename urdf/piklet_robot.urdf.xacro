@@ -10,6 +10,7 @@
   <xacro:property name="wheel_height" value="0.02" />
   <xacro:property name="wheel_mass" value="2.5" />
   <xacro:property name="pole_length" value="0.2" />
+  <xacro:property name="front_mount_length" value="0.2" />
 
   <!-- Include modular parts -->
   <xacro:include filename="$(find piklet_description)/urdf/materials.xacro"/>
@@ -20,6 +21,7 @@
   <xacro:include filename="$(find piklet_description)/urdf/depth_camera.xacro"/>
   <xacro:include filename="$(find piklet_description)/urdf/gazebo.xacro"/>
   <xacro:include filename="$(find piklet_description)/urdf/arm-3-dof.xacro"/>
+  <xacro:include filename="$(find piklet_description)/urdf/finger-2-gripper.xacro"/>
   
   <!-- Base body (two plates + poles) -->
   <xacro:piklet_body parent="world"/>
@@ -49,16 +51,21 @@
     <origin xyz="0.02 0.02 0 " rpy="${M_PI/2} 0 0" />
   </xacro:passive_wheel_link>
 
-  <!-- Arm -->
-  <xacro:simple_arm parent="base_top" base_radius="${base_radius}"/>
+  <!-- Arm attaches to mount lower part -->
+  <xacro:simple_arm parent="front_mount" base_radius="${base_radius}"/>
+
+  <!-- 2 finger parallel gripper -->
+  <xacro:parallel_gripper parent_link="arm_link_end" xyz="0.1 0 0"/>
 
   <!-- Sensors -->
   <xacro:lidar_sensor parent="base_top" xyz="0 0 0.030"/>
-  <xacro:depth_camera parent="base_top" xyz="0.13 0 0.025"/>
+
+  <!-- Camera attaches on top of mount -->
+  <xacro:depth_camera parent="front_mount" xyz="0 0 0.12"/> 
 
   <!-- Gazebo Plugins -->
   <xacro:diff_drive_plugin left="left_wheel_joint" right="right_wheel_joint"/>
-  <xacro:lidar_plugin parent="lidar_link"/>
-  <xacro:depth_camera_plugin parent="depth_camera_link"/>
+  <!--xacro:lidar_plugin parent="lidar_link"/-->
+  <!--xacro:depth_camera_plugin parent="depth_camera_link"/-->
 
 </robot>
