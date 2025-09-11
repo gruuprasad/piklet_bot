@@ -8,6 +8,12 @@
         <geometry><box size="0.06 0.04 0.04"/></geometry>
         <material name="green"/>
       </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="0.06 0.04 0.04" />
+        </geometry>
+      </collision>
     </link>
 
     <joint name="depth_camera_mount" type="fixed">

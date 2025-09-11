@@ -6,7 +6,7 @@
   <xacro:property name="passive_wheel_height" value="0.04" />
   <xacro:property name="passive_wheel_radius" value="0.025" />
   <xacro:property name="passive_wheel_mass" value="0.5" />
-  <xacro:property name="wheel_radius" value="0.039" />
+  <xacro:property name="wheel_radius" value="0.04" />
   <xacro:property name="wheel_height" value="0.02" />
   <xacro:property name="wheel_mass" value="2.5" />
   <xacro:property name="pole_length" value="0.2" />
@@ -65,7 +65,7 @@
 
   <!-- Gazebo Plugins -->
   <xacro:diff_drive_plugin left="left_wheel_joint" right="right_wheel_joint"/>
-  <!--xacro:lidar_plugin parent="lidar_link"/-->
-  <!--xacro:depth_camera_plugin parent="depth_camera_link"/-->
+  <xacro:lidar_plugin parent="lidar_link"/>
+  <xacro:depth_camera_plugin parent="depth_camera_link"/>
 
 </robot>

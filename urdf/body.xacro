@@ -8,6 +8,14 @@
   </xacro:macro>
 
   <xacro:macro name="piklet_body" params="parent">
+    <link name="base_footprint" />
+    <!-- The base footprint of the robot is located underneath the chassis -->
+    <joint name="base_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link" />
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </joint>
+
     <!-- Bottom plate -->
     <link name="base_link">
       <inertial>
@@ -72,6 +80,12 @@
         <geometry><cylinder radius="0.01" length="${pole_length}"/></geometry>
         <material name="darkgray"/>
       </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <cylinder length="${pole_length}" radius="0.01" />
+        </geometry>
+      </collision>
     </link>
     <joint name="${name}_joint" type="fixed">
       <origin xyz="${xyz}" rpy="0 0 0"/>

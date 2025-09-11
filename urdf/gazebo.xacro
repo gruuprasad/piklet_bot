@@ -15,6 +15,8 @@
         <!-- physics -->
         <wheel_separation>0.34</wheel_separation>
         <wheel_radius>0.05</wheel_radius>
+        <max_wheel_torque>10.0</max_wheel_torque>
+        <max_wheel_acceleration>5.0</max_wheel_acceleration>
 
         <!-- odom frame -->
         <odom_frame>odom</odom_frame>
@@ -23,6 +25,9 @@
 
         <!-- topic interface -->
         <topic>cmd_vel</topic>
+
+        <!-- stop wheels if no command received -->
+        <command_timeout>0.5</command_timeout> <!-- seconds -->
       </plugin>
 
       <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher">
