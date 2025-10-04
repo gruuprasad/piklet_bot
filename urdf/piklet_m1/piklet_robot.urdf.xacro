@@ -29,8 +29,8 @@
 
   <!-- Base body (two plates + poles) -->
   <!-- The base footprint of the robot is located underneath the chassis -->
-  <link name="base_footprint" />
-  <xacro:piklet_body parent="base_footprint"/>
+  <link name="world" />
+  <xacro:piklet_body parent="world"/>
 
   <!-- Drive wheels -->
   <xacro:wheel side="right" parent="base_link" translateX="0"
@@ -57,7 +57,7 @@
     <origin xyz="0.02 0.02 0 " rpy="${M_PI/2} 0 0" />
   </xacro:passive_wheel_link>
 
-  <!-- Arm attaches to mount lower part -->
+  <!-- Arm attaches to front_mount lower part -->
   <xacro:simple_arm parent="front_mount" base_radius="${base_radius}"/>
 
   <!-- 2 finger parallel gripper -->
@@ -74,6 +74,6 @@
   <xacro:depth_camera_plugin parent="depth_camera_link"/>
 
   <!-- ros2_control -->
-  <xacro:piklet_diffdrive_ros2_control name="Piklet" prefix="$(arg prefix)" />
+  <xacro:piklet_diffdrive_ros2_control name="Piklet_m1" prefix="$(arg prefix)" />
 
 </robot>

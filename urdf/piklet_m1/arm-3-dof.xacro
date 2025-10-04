@@ -5,6 +5,11 @@
 
   <xacro:macro name="simple_arm" params="parent base_radius">
     <link name="shoulder_yaw_link">
+      <visual>
+        <geometry>
+          <sphere radius="0.01"/>
+        </geometry>
+      </visual>
       <inertial>
         <mass value="1e-6"/>
         <inertia ixx="1e-9" iyy="1e-9" izz="1e-9" ixy="0" ixz="0" iyz="0"/>
@@ -19,6 +24,11 @@
     </joint>
 
     <link name="shoulder_pitch_link">
+      <visual>
+        <geometry>
+          <sphere radius="0.01"/>
+        </geometry>
+      </visual>
       <inertial>
         <mass value="1e-6"/>
         <inertia ixx="1e-9" iyy="1e-9" izz="1e-9" ixy="0" ixz="0" iyz="0"/>
@@ -33,6 +43,11 @@
     </joint>
 
     <link name="shoulder_roll_link">
+      <visual>
+        <geometry>
+          <sphere radius="0.01"/>
+        </geometry>
+      </visual>
       <inertial>
         <mass value="1e-6"/>
         <inertia ixx="1e-9" iyy="1e-9" izz="1e-9" ixy="0" ixz="0" iyz="0"/>

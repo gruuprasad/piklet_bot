@@ -26,7 +26,6 @@
     </link>
 
     <!-- Attach base to parent arm link -->
-
     <joint name="${gripper_prefix}_mount_joint" type="fixed">
       <parent link="${parent_link}"/>
       <child link="${gripper_prefix}_base"/>
