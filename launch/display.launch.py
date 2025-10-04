@@ -10,7 +10,7 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('piklet_description')
-    xacro_file = os.path.join(pkg_share, 'urdf', 'piklet_robot.urdf.xacro')
+    xacro_file = os.path.join(pkg_share, 'urdf', 'piklet_m1', 'piklet_robot.urdf.xacro')
 
     # Launch arguments
     sim = LaunchConfiguration('sim')
